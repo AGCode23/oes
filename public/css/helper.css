@@ -1,0 +1,12 @@
+.hidden {
+  display: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+main {
+  margin-top: 60px;
+  padding-top: 20px;
+}

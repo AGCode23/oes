@@ -1,0 +1,30 @@
+.dashboard__nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 50px 20px;
+}
+
+.dashboard__profile {
+  height: 300px;
+}
+
+.dashboard__exam {
+  height: 300px;
+}
+
+.dashboard__result {
+  height: 300px;
+}
+
+@media (max-width: 1023px) {
+  .dashboard__nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard__nav {
+    grid-template-columns: 1fr;
+  }
+}

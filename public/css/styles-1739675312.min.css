@@ -1,0 +1,40 @@
+@import url(reset.css);
+@import url(ViewsCSS/header/header.css);
+@import url(ViewsCSS/footer/footer.css);
+@import url(ViewsCSS/register.css);
+@import url(ViewsCSS/login.css);
+@import url(ViewsCSS/dashboard.css);
+@import url(ViewsCSS/exam_create.css);
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HELPER
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+@import url(helper.css);

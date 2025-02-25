@@ -1,0 +1,47 @@
+services:
+  app:
+    build: ./docker/php
+    container_name: online_exam_app
+    restart: always
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    container_name: online_exam_nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - app_network
+
+  db:
+    image: mysql:8.0.41
+    container_name: online_exam_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    ports:
+      - "3306:3306"
+
+networks:
+  app_network:
+
+volumes:
+  db_data:
