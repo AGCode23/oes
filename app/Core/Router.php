@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Controllers\ExamController;
 use App\Controllers\ExamCreateController;
+use App\Controllers\ExamListController;
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
 
@@ -75,7 +76,12 @@ class Router
                 break;
 
             case "/exam/list":
-                echo "List";
+                $controller = new ExamListController();
+                $controller->showExamListPage();
+                break;
+
+            case "/exam/take-exam":
+                echo $_POST['exam_id'];
                 break;
 
             case "/logout":
