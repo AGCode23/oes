@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Exam;
 
 use PDO;
 use App\Models\BaseModel;
@@ -21,7 +21,7 @@ class ExamList extends BaseModel
             $exams = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $exams;
         } catch (\Throwable $e) {
-            error_log("Database Error in getUserByEmail: " . $e->getMessage());
+            error_log("Database Error in getExams: " . $e->getMessage());
             return false;
         }
     }

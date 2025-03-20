@@ -15,7 +15,7 @@
         <div class="hidden question-divs" id="exam-create__multiple_choice-container">
             <div class="exam-create__multiple_choice">
                 <p class="exam-create__question-count">1</p>
-                <input class="mc-question" type="text" name="exam-create__mc-question-1" placeholder="Question">
+                <input class="mc-question exam-create__question" type="text" name="exam-create__mc-question-1" placeholder="Question">
                 <input class="mc-option" type="text" name="exam-create__mc-option-a-1" placeholder="Option A">
                 <input class="mc-option" type="text" name="exam-create__mc-option-b-1" placeholder="Option B">
                 <input class="mc-option" type="text" name="exam-create__mc-option-c-1" placeholder="Option C">
@@ -26,20 +26,20 @@
         <div class="hidden question-divs" id="exam-create__true_false-container">
             <div class="exam-create__true_false">
                 <p class="exam-create__question-count">1</p>
-                <input class="tf-question" type="text" name="exam-create__tf-question-1" placeholder="Question">
+                <input class="tf-question exam-create__question" type="text" name="exam-create__tf-question-1" placeholder="Question">
                 <input class="tf-answer" type="text" name="exam-create__tf-answer-1" placeholder="Answer">
             </div>
         </div>
         <div class="hidden question-divs" id="exam-create__short_answer-container">
             <div class="exam-create__short_answer">
                 <p class="exam-create__question-count">1</p>
-                <input type="text" name="exam-create__sa-question-1" placeholder="Question">
+                <input class="exam-create__question" type="text" name="exam-create__sa-question-1" placeholder="Question">
             </div>
         </div>
         <div class="hidden question-divs" id="exam-create__long_answer-container">
             <div class="exam-create__long_answer">
                 <p class="exam-create__question-count">1</p>
-                <input type="text" name="exam-create__la-question-1" placeholder="Question">
+                <input class="exam-create__question" type="text" name="exam-create__la-question-1" placeholder="Question">
             </div>
         </div>
         <div class="exam-create__buttons">

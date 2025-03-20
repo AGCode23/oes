@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\User;
 
 use App\Helpers\Helper;
-use App\Models\User;
+use App\Models\User\User;
+use App\Controllers\BaseController;
 
 class UserController extends BaseController
 {

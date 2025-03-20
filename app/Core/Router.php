@@ -2,11 +2,12 @@
 
 namespace App\Core;
 
-use App\Controllers\ExamController;
-use App\Controllers\ExamCreateController;
-use App\Controllers\ExamListController;
-use App\Controllers\HomeController;
-use App\Controllers\UserController;
+use App\Controllers\Exam\ExamController;
+use App\Controllers\Home\HomeController;
+use App\Controllers\User\UserController;
+use App\Controllers\Exam\ExamListController;
+use App\Controllers\Exam\ExamCreateController;
+use App\Controllers\Exam\ExamQuestionController;
 
 class Router
 {
@@ -81,7 +82,13 @@ class Router
                 break;
 
             case "/exam/take-exam":
-                echo $_POST['exam_id'];
+                $controller = new ExamQuestionController();
+                if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                    if (isset($_GET['exam_id'])) {
+                        $exam_id = (int)$_GET['exam_id'];
+                        $controller->showQuestionPage($exam_id);
+                    }
+                }
                 break;
 
             case "/logout":

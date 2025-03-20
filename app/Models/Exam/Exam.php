@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Exam;
 
 use PDO;
 use App\Models\BaseModel;

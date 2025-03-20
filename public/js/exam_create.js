@@ -10,6 +10,7 @@ examForm.addEventListener("submit", handleSubmitExam);
 
 function handleDivContent() {
   const examButtonDiv = document.querySelector(".exam-create__buttons");
+  selectedQuestionType = examType.value;
 
   contentDiv.forEach((div) => {
     const questionDivs = div.querySelectorAll("div[class^='exam-create__']");
@@ -18,9 +19,18 @@ function handleDivContent() {
     });
 
     div.style.display = "none";
-  });
+    const divInput = div.querySelectorAll(".exam-create__question");
+    divInput.forEach((input) => {
+      input.disabled = true;
+    });
 
-  selectedQuestionType = examType.value;
+    if (
+      div.getAttribute("id") ===
+      `exam-create__${selectedQuestionType}-container`
+    ) {
+      div.querySelector(".exam-create__question").disabled = false;
+    }
+  });
 
   if (selectedQuestionType) {
     const selectedDiv = document.getElementById(
@@ -66,7 +76,7 @@ function handleAddQuestion() {
   const templates = {
     multiple_choice: `
         <p class="exam-create__question-count">${questionCount}</p>
-        <input class="mc-question" type="text" name="exam-create__mc-question-${questionCount}" placeholder="Question">
+        <input class="mc-question exam-create__question" type="text" name="exam-create__mc-question-${questionCount}" placeholder="Question">
         <input class="mc-option" type="text" name="exam-create__mc-option-a-${questionCount}" placeholder="Option A">
         <input class="mc-option" type="text" name="exam-create__mc-option-b-${questionCount}" placeholder="Option B">
         <input class="mc-option" type="text" name="exam-create__mc-option-c-${questionCount}" placeholder="Option C">
@@ -75,16 +85,16 @@ function handleAddQuestion() {
         `,
     true_false: `
         <p class="exam-create__question-count">${questionCount}</p>
-        <input class="tf-question" type="text" name="exam-create__tf-question-${questionCount}" placeholder="Question">
+        <input class="tf-question exam-create__question" type="text" name="exam-create__tf-question-${questionCount}" placeholder="Question">
         <input class="tf-answer" type="text" name="exam-create__tf-answer-${questionCount}" placeholder="Answer">
         `,
     short_answer: `
         <p class="exam-create__question-count">${questionCount}</p>
-        <input type="text" name="exam-create__sa-question-${questionCount}" placeholder="Question">
+        <input class="exam-create__question" type="text" name="exam-create__sa-question-${questionCount}" placeholder="Question">
         `,
     long_answer: `
         <p class="exam-create__question-count">${questionCount}</p>
-        <input type="text" name="exam-create__la-question-${questionCount}" placeholder="Question">
+        <input class="exam-create__question" type="text" name="exam-create__la-question-${questionCount}" placeholder="Question">
         `,
   };
 
@@ -100,15 +110,34 @@ async function handleSubmitExam(e) {
   e.preventDefault();
   const title = document.getElementById("exam-title").value.trim();
   const description = document.getElementById("exam-description").value.trim();
+  const type = document.getElementById("exam-type").value;
   const duration = parseInt(
     document.getElementById("exam-duration").value.trim(),
     10
   );
-  const type = document.getElementById("exam-type").value;
 
   if (!title || !type || isNaN(duration)) {
     console.error("Please fill in all exam fields.");
     return;
+  }
+
+  // Check if question input have value
+  for (let i = 0; i < contentDiv.length; i++) {
+    let questions = [];
+    const div = contentDiv[i];
+
+    if (div.style.display !== "none") {
+      const questionInputs = div.querySelectorAll(".exam-create__question");
+
+      questionInputs.forEach((input) => {
+        questions.push(input.value);
+      });
+      const isValidQuestion = checkChunks(questions, 1);
+      if (!isValidQuestion) {
+        console.error("Question field is required!");
+        return;
+      }
+    }
   }
 
   let questionData = [];
@@ -124,6 +153,23 @@ async function handleSubmitExam(e) {
     return;
   }
 
+  // Check if the options have at least 1 option
+  if (selectedQuestionType === "multiple_choice") {
+    const mcOptionInputs = document.querySelectorAll(".mc-option");
+    let options = [];
+
+    mcOptionInputs.forEach((input) => {
+      options.push(input.value);
+    });
+    const isValidOption = checkChunks(options, 4);
+
+    if (!isValidOption) {
+      console.error("Must have at least 1 option!");
+      return;
+    }
+  }
+
+  // Handlers for every question type
   const questionTypeHandlers = {
     "exam-create__multiple_choice-container": () => {
       const questionDivs = activeDiv.querySelectorAll("input.mc-question");
@@ -186,6 +232,7 @@ async function handleSubmitExam(e) {
     questions: questionData,
   });
 
+  // Send data to backend (PHP)
   try {
     const response = await fetch("/exam/create", {
       method: "POST",
@@ -194,9 +241,22 @@ async function handleSubmitExam(e) {
     });
 
     const result = await response.json();
-    console.log(result.message);
-    // if (response.ok) window.location.reload();
+    if (response.ok) window.location.reload();
   } catch (error) {
     console.error("Error submitting the exam:", error);
   }
+}
+
+// Helper functions
+
+function checkChunks(arr, count = 4) {
+  for (let i = 0; i < arr.length; i += count) {
+    const chunk = arr.slice(i, i + count);
+    const hasTruthy = chunk.some((item) => item); // `some` returns true if at least one item is truthy
+
+    if (!hasTruthy) {
+      return false;
+    }
+  }
+  return true;
 }

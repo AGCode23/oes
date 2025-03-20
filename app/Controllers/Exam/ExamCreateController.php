@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Exam;
 
+use App\Models\Exam\ExamCreate;
 use App\Controllers\BaseController;
-use App\Helpers\Helper;
-use App\Models\ExamCreate;
 
 class ExamCreateController extends BaseController
 {

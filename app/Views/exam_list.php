@@ -9,7 +9,7 @@
                     <h2><?= $exam['title'] ?></h2>
                     <p><?= $exam['description'] ?></p>
                     <p><?= $exam['duration'] ?></p>
-                    <form action="/exam/take-exam" method="post">
+                    <form method="get" action="/exam/take-exam">
                         <button type="submit" name="exam_id" value="<?= htmlspecialchars($exam['id']) ?>">Get Exam</button>
                     </form>
                 </div>

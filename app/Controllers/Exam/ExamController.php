@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Exam;
 
-use App\Models\Exam;
+use App\Models\Exam\Exam;
 use App\Controllers\BaseController;
 
 class ExamController extends BaseController
