@@ -14,11 +14,15 @@ class ExamListController extends BaseController
         $this->userModel = new ExamList();
     }
 
-    public function showExamListPage()
+    public function showExamListPage($studentId)
     {
         $data = [];
-        $exams = $this->userModel->getExams($_SESSION['user_id']);
+        $exams = $this->userModel->getExams($studentId);
         $data['user_exams'] = $exams;
+        foreach ($data['user_exams'] as $exam) {
+            $currentStatus = $this->userModel->getStatus($studentId, $exam['id']);
+            $data['user_exam_status'][$exam['id']] = $currentStatus;
+        }
         $this->view('exam_list', $data);
     }
 }

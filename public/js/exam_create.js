@@ -248,7 +248,6 @@ async function handleSubmitExam(e) {
 }
 
 // Helper functions
-
 function checkChunks(arr, count = 4) {
   for (let i = 0; i < arr.length; i += count) {
     const chunk = arr.slice(i, i + count);

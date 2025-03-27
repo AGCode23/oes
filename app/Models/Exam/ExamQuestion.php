@@ -7,6 +7,60 @@ use App\Models\BaseModel;
 
 class ExamQuestion extends BaseModel
 {
+    public function markAsPending($studentId, $examId)
+    {
+        try {
+            // $stmt = $this->db->prepare(
+            //     "INSERT INTO exam_results (student_id, exam_id, status, submitted_at)
+            //     VALUES (:student_id, :exam_id, 'pending', :submitted_at)
+            //     ON DUPLICATE KEY UPDATE status = 'pending', submitted_at = :submitted_at"
+            // );
+
+            // $stmt->execute([
+            //     ':student_id' => $studentId,
+            //     ':exam_id' => $examId,
+            //     ':submitted_at' => date('Y-m-d H:i:s')
+            // ]);
+
+            $stmt = $this->db->prepare("SELECT id FROM exam_results WHERE student_id = :student_id AND exam_id = :exam_id");
+
+            $stmt->execute([
+                ':student_id' => $studentId,
+                ':exam_id' => $examId
+            ]);
+
+            $existingEntry = $stmt->fetch();
+            if ($existingEntry) {
+                // Update if exists
+                $stmt = $this->db->prepare(
+                    "UPDATE exam_results SET status = 'pending', submitted_at = :submitted_at WHERE id = :id"
+                );
+
+                $stmt->execute([
+                    ':submitted_at' => date('Y-m-d H:i:s'),
+                    ':id' => $existingEntry['id']
+                ]);
+            } else {
+                // Insert if doesn't exist
+                $stmt = $this->db->prepare(
+                    "INSERT INTO exam_results (student_id, exam_id, status, submitted_at)
+                    VALUES (:student_id, :exam_id, 'pending', :submitted_at)"
+                );
+
+                $stmt->execute([
+                    ':student_id' => $studentId,
+                    ':exam_id' => $examId,
+                    ':submitted_at' => date('Y-m-d H:i:s')
+                ]);
+            }
+
+            return true;
+        } catch (\Throwable $th) {
+            $this->logError('markAsPending', $th);
+            return false;
+        }
+    }
+
     public function getQuestionExam($exam_id)
     {
         try {
@@ -16,7 +70,7 @@ class ExamQuestion extends BaseModel
 
             return $questions;
         } catch (\Throwable $e) {
-            error_log("Database Error in getQuestionExam: " . $e->getMessage());
+            $this->logError('getQuestionExam', $e);
             return false;
         }
     }
@@ -34,8 +88,13 @@ class ExamQuestion extends BaseModel
 
             return $verify->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Throwable $e) {
-            error_log("Database Error in isStudentAuthorized: " . $e->getMessage());
+            $this->logError('isStudentAuthorized', $e);
             return false;
         }
+    }
+
+    private function logError($method, \Throwable $e)
+    {
+        error_log("Database Error in {$method}: " . $e->getMessage());
     }
 }

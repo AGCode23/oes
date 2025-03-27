@@ -14,12 +14,15 @@ class ExamQuestionController extends BaseController
         $this->userModel = new ExamQuestion();
     }
 
-    public function showQuestionPage($exam_id)
+    public function showQuestionPage($studentId, $exam_id)
     {
+        // Mark the exam as pending
+        $this->userModel->markAsPending($studentId, $exam_id);
 
         $data = [];
         $questions = $this->userModel->getQuestionExam($exam_id);
-        if ($questions && $this->userModel->isStudentAuthorized($_SESSION['user_id'], $exam_id)) {
+        if ($questions && $this->userModel->isStudentAuthorized($studentId, $exam_id)) {
+            $data['exam_id'] = $exam_id;
             $data['exam_questions'] = $questions;
             $this->view('exam_question', $data);
         } else {

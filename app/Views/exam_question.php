@@ -1,7 +1,8 @@
 <?php include "partials/header.php" ?>
 
 <section class="exam-question__section">
-    <form action="/submit-answer" method="POST">
+    <form action="/exam/submit_answer" method="POST">
+        <input type="hidden" name="exam_id" value="<?= $data['exam_id'] ?>">
         <?php foreach ($data['exam_questions'] as $question): ?>
             <div class="exam-question__question-container">
                 <p class="exam-question__question"><?= $question['question_text'] ?></p>
@@ -19,17 +20,14 @@
                     ?>
                     <?php foreach ($options as $option): ?>
                         <label>
-                            <input type="radio" name="choice-<?= $question['id'] ?>" value="<?= $option ?>"> <?= $option ?>
+                            <input type="radio" name="answer[<?= $question['id'] ?>]" value="<?= $option ?>"> <?= $option ?>
                         </label>
-                    <?php
-
-                    endforeach;
-                    unset($option);
-
-                    ?>
+                    <?php endforeach;
+                    unset($option) ?>
                 <?php endif ?>
             </div>
-        <?php endforeach ?>
+        <?php endforeach;
+        unset($question) ?>
         <button type="submit">Submit Answers</button>
     </form>
 </section>

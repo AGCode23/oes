@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Controllers\Exam\ExamAnswerController;
 use App\Controllers\Exam\ExamController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\User\UserController;
@@ -77,18 +78,35 @@ class Router
                 break;
 
             case "/exam/list":
+                $student_id = (int)$_SESSION['user_id'];
                 $controller = new ExamListController();
-                $controller->showExamListPage();
+
+                $controller->showExamListPage($student_id);
                 break;
 
-            case "/exam/take-exam":
+            case "/exam/take_exam":
                 $controller = new ExamQuestionController();
                 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     if (isset($_GET['exam_id'])) {
+                        $user_id = (int)$_SESSION['user_id'];
                         $exam_id = (int)$_GET['exam_id'];
-                        $controller->showQuestionPage($exam_id);
+
+                        $controller->showQuestionPage($user_id, $exam_id);
                     }
                 }
+                break;
+
+            case "/exam/submit_answer":
+                $controller = new ExamAnswerController();
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $user_id = (int)$_SESSION['user_id'] ?? null;
+                    $examId = (int)$_POST['exam_id'] ?? null;
+                    $answers = $_POST['answer'] ?? [];
+
+                    $controller->submitAnswers($user_id, $examId, $answers);
+                }
+
                 break;
 
             case "/logout":

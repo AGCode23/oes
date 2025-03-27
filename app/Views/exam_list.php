@@ -9,11 +9,15 @@
                     <h2><?= $exam['title'] ?></h2>
                     <p><?= $exam['description'] ?></p>
                     <p><?= $exam['duration'] ?></p>
-                    <form method="get" action="/exam/take-exam">
+                    <?php if ($data['user_exam_status'][$exam['id']]): ?>
+                        <p><?= $data['user_exam_status'][$exam['id']] ?></p>
+                    <?php endif ?>
+                    <form method="get" action="/exam/take_exam">
                         <button type="submit" name="exam_id" value="<?= htmlspecialchars($exam['id']) ?>">Get Exam</button>
                     </form>
                 </div>
-            <?php endforeach ?>
+            <?php endforeach;
+            unset($exam) ?>
         <?php else: ?>
             <p><?= "No exams currently available" ?></p>
         <?php endif ?>
