@@ -3,6 +3,7 @@
 <section class="exam-question__section">
     <form action="/exam/submit_answer" method="POST">
         <input type="hidden" name="exam_id" value="<?= $data['exam_id'] ?>">
+        <input type="hidden" name="exam_type" value="<?= $data['exam_questions'][0]['type'] ?>">
         <?php foreach ($data['exam_questions'] as $question): ?>
             <div class="exam-question__question-container">
                 <p class="exam-question__question"><?= $question['question_text'] ?></p>

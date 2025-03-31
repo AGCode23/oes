@@ -103,8 +103,9 @@ class Router
                     $user_id = (int)$_SESSION['user_id'] ?? null;
                     $examId = (int)$_POST['exam_id'] ?? null;
                     $answers = $_POST['answer'] ?? [];
+                    $questionType = $_POST['exam_type'] ?? null;
 
-                    $controller->submitAnswers($user_id, $examId, $answers);
+                    $controller->submitAnswers($user_id, $examId, $answers, $questionType);
                 }
 
                 break;
