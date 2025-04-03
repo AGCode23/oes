@@ -61,6 +61,23 @@ class ExamQuestion extends BaseModel
         }
     }
 
+    public function getStatus($studentId, $examId)
+    {
+        $examAnswerModel = new ExamAnswer();
+        $currentStatus = $examAnswerModel->getExamStatus($studentId, $examId);
+        return $currentStatus;
+    }
+
+    public function isPending($studentId, $examId)
+    {
+        $examAnswerModel = new ExamAnswer();
+        $currentStatus = $examAnswerModel->getExamStatus($studentId, $examId);
+        if ($currentStatus == 'pending' || $currentStatus == false) {
+            return true;
+        }
+        return false;
+    }
+
     public function getQuestionExam($exam_id)
     {
         try {

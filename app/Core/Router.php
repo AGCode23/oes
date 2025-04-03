@@ -2,12 +2,13 @@
 
 namespace App\Core;
 
-use App\Controllers\Exam\ExamAnswerController;
 use App\Controllers\Exam\ExamController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\User\UserController;
 use App\Controllers\Exam\ExamListController;
+use App\Controllers\Exam\ExamAnswerController;
 use App\Controllers\Exam\ExamCreateController;
+use App\Controllers\Exam\ExamResultController;
 use App\Controllers\Exam\ExamQuestionController;
 
 class Router
@@ -91,7 +92,12 @@ class Router
                         $user_id = (int)$_SESSION['user_id'];
                         $exam_id = (int)$_GET['exam_id'];
 
-                        $controller->showQuestionPage($user_id, $exam_id);
+                        $isPending = $controller->userModel->isPending($user_id, $exam_id);
+                        if ($isPending) {
+                            $controller->showQuestionPage($user_id, $exam_id);
+                        } else {
+                            header("Location: /exam");
+                        }
                     }
                 }
                 break;
@@ -106,6 +112,20 @@ class Router
                     $questionType = $_POST['exam_type'] ?? null;
 
                     $controller->submitAnswers($user_id, $examId, $answers, $questionType);
+                    header("Location: /exam");
+                    exit;
+                }
+
+                break;
+
+            case "/exam/result":
+                $controller = new ExamResultController();
+                $user_id = $_SESSION['user_id'];
+                $subjectCode = $_GET['subject'] ?? null;
+                if (isset($_GET['subject']) || isset($_GET['years'])) {
+                    $controller->filterResults($user_id, $subjectCode);
+                } else {
+                    $controller->showResultPage($user_id);
                 }
 
                 break;
