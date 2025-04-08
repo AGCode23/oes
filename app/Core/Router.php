@@ -122,8 +122,9 @@ class Router
                 $controller = new ExamResultController();
                 $user_id = $_SESSION['user_id'];
                 $subjectCode = $_GET['subject'] ?? null;
+                $yearLevels = !empty($_GET['years']) ? explode(",", $_GET['years']) : [];
                 if (isset($_GET['subject']) || isset($_GET['years'])) {
-                    $controller->filterResults($user_id, $subjectCode);
+                    $controller->filterResults($user_id, $subjectCode, $yearLevels);
                 } else {
                     $controller->showResultPage($user_id);
                 }

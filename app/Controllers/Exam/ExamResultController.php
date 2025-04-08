@@ -25,13 +25,17 @@ class ExamResultController extends BaseController
         $this->view('exam_result', $data);
     }
 
-    public function filterResults($studentId, $subjectCode)
+    public function filterResults($studentId, $subjectCode, $yearLevels)
     {
         if (ob_get_length()) ob_clean();
         header('Content-Type: application/json');
-        $filteredResults = $this->userModel->getFilteredResults($studentId, $subjectCode);
+        $filteredResults = $this->userModel->getFilteredResults($studentId, $subjectCode, $yearLevels);
+        $filteredYear = $this->userModel->getFilteredYear($studentId, $yearLevels);
 
-        echo json_encode($filteredResults);
+        echo json_encode([
+            'filteredResult' => $filteredResults,
+            'filteredYear' => $filteredYear
+        ]);
         exit;
     }
 }

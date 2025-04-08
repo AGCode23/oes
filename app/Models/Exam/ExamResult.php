@@ -56,26 +56,54 @@ class ExamResult extends BaseModel
                   JOIN exam_assignments AS ea ON er.exam_id = ea.exam_id
                   JOIN sections AS s ON ea.section_id = s.id
                   JOIN classes AS c ON s.class_id = c.id
-                  WHERE er.student_id = :student_id";
+                  WHERE er.student_id = ?";
 
             $params = [':student_id' => $studentId];
 
             if ($subjectCode) {
-                $query .= " AND c.class_code = :class_code";
+                $query .= " AND c.class_code = ?";
                 $params[':class_code'] = $subjectCode;
             }
 
             // Continue working on year level filter
-
+            if (!empty($yearLevels)) {
+                $placeholders = implode(',', array_fill(0, count($yearLevels), '?'));
+                $query .= " AND s.year_level IN ($placeholders)";
+                $params = array_merge($params, $yearLevels);
+            }
 
             $stmt = $this->db->prepare($query);
-            $stmt->execute($params);
-
+            $stmt->execute(array_values($params));
             $filteredResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $filteredResult;
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    public function getFilteredYear($studentId, $yearLevels = [])
+    {
+        $query = "SELECT c.class_code
+                FROM exam_results AS er
+                JOIN exams AS e ON er.exam_id = e.id
+                JOIN exam_assignments AS ea ON er.exam_id = ea.exam_id
+                JOIN sections AS s ON ea.section_id = s.id
+                JOIN classes AS c ON s.class_id = c.id
+                WHERE er.student_id = ?";
+
+        $params = [':student_id' => $studentId];
+
+        if (!empty($yearLevels)) {
+            $placeholders = implode(',', array_fill(0, count($yearLevels), '?'));
+            $query .= " AND s.year_level IN ($placeholders)";
+            $params = array_merge($params, $yearLevels);
+        }
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array_values($params));
+        $year = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $year;
     }
 }

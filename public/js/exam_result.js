@@ -4,17 +4,51 @@ function handleResultPage() {
   const subjectDropdown = document.getElementById("exam_result__subject-code");
   const yearCheckboxes = document.querySelectorAll(".year-checkbox");
 
-  function getSelectedFilters() {
-    const selectedSubject = subjectDropdown.value;
-    const selectedYears = Array.from(yearCheckboxes)
+  function getSelectedYears() {
+    return Array.from(yearCheckboxes)
       .filter((checkbox) => checkbox.checked)
       .map((checkbox) => checkbox.value);
+  }
 
-    return { subject: selectedSubject, years: selectedYears };
+  function getSelectedSubject() {
+    return subjectDropdown.value;
+  }
+
+  function fetchDropdownAndResults() {
+    const selectedYears = getSelectedYears();
+
+    fetch(`/exam/result?subject=&years=${selectedYears.join(",")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        updateDropdown(data);
+
+        let subject = getSelectedSubject();
+        const validSubjects = Array.from(subjectDropdown.options).map(
+          (option) => option.value
+        );
+
+        if (!validSubjects.includes(subject)) {
+          subject = "";
+          subjectDropdown.value = "";
+        }
+
+        fetch(
+          `/exam/result?subject=${subject}&years=${selectedYears.join(",")}`
+        )
+          .then((res) => res.json())
+          .then((data) => updateResults(data))
+          .catch((err) => console.error("Error fetching final results:", err));
+      })
+      .catch((error) =>
+        console.error("Error fetching filtered years and dropdown:", error)
+      );
   }
 
   function fetchFilteredResults() {
-    const filter = getSelectedFilters();
+    const filter = {
+      subject: getSelectedSubject(),
+      years: getSelectedYears(),
+    };
 
     fetch(
       `/exam/result?subject=${filter.subject}&years=${filter.years.join(",")}`
@@ -22,6 +56,7 @@ function handleResultPage() {
       .then((response) => response.json())
       .then((data) => {
         updateResults(data);
+        updateDropdown(data);
       })
       .catch((error) =>
         console.error("Error fetching filtered results:", error)
@@ -55,7 +90,7 @@ function handleResultPage() {
     percentageContainer.innerHTML = "";
     remarksContainer.innerHTML = "";
 
-    data.forEach((result) => {
+    data.filteredResult.forEach((result) => {
       titleContainer.innerHTML += `<li>${result.title}</li>`;
       descriptionContainer.innerHTML += `<p>${result.description}</p>`;
       subjectCodeContainer.innerHTML += `<p>${result.class_code}</p>`;
@@ -68,8 +103,34 @@ function handleResultPage() {
     });
   }
 
+  function updateDropdown(data) {
+    const currentSelectedValue = subjectDropdown.value;
+
+    subjectDropdown.innerHTML = '<option value="">Subject Code</option>';
+
+    const subjectDropdownOptions = [];
+    data.filteredYear.forEach((result) => {
+      subjectDropdownOptions.push(result.class_code);
+    });
+
+    const uniqueSubjectOptions = [...new Set(subjectDropdownOptions)];
+
+    uniqueSubjectOptions.forEach((subject) => {
+      subjectDropdown.insertAdjacentHTML(
+        "beforeend",
+        `<option value="${subject}">${subject}</option>`
+      );
+    });
+
+    if (uniqueSubjectOptions.includes(currentSelectedValue)) {
+      subjectDropdown.value = currentSelectedValue;
+    } else {
+      subjectDropdown.value = "";
+    }
+  }
+
   subjectDropdown.addEventListener("change", fetchFilteredResults);
   yearCheckboxes.forEach((checkbox) =>
-    checkbox.addEventListener("change", fetchFilteredResults)
+    checkbox.addEventListener("change", fetchDropdownAndResults)
   );
 }
