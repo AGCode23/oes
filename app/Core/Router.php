@@ -51,7 +51,7 @@ class Router
                     );
                 } else {
                     if (isset($_SESSION['user_id'])) header('Location: /');
-                    $controller->showRegisterPage();
+                    $controller->showLoginPage();
                 }
                 break;
 

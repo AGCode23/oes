@@ -2,23 +2,33 @@
   display: flex;
 }
 
-.login__left-side {
+/* Form Container */
+.login__form-container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   flex: 1.5;
   height: 100vh;
+  transition: transform 0.6s ease;
+  z-index: 2;
 }
 
-.login__right-side {
+.login__form-container.shift-right {
+  transform: translateX(100%);
+}
+
+/* Image Container */
+.login__image-container {
   flex: 2;
-  background-image: url("/assets/LoginSidePhoto.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("/assets/LoginSidePhoto.png") center/cover no-repeat;
+  transition: transform 0.6s ease;
+  z-index: 1;
 }
 
+.login__image-container.shift-left {
+  transform: translateX(-100%);
+}
+
+/* Logo */
 .login__logo {
   display: flex;
   align-items: center;
@@ -27,14 +37,23 @@
 }
 
 .login__logo img {
-  width: 80px;
+  width: 55px;
 }
 
 .login__logo p {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 500;
 }
 
+/* Sub Container */
+.login__form-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Center Div */
 .login__center-div {
   display: flex;
   flex-direction: column;
@@ -44,13 +63,15 @@
 }
 
 .login__center-div .login__login-text {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
+/* Error Message */
 .login__error {
   color: red;
 }
 
+/* Form */
 .login__form {
   display: flex;
   flex-direction: column;
@@ -63,7 +84,7 @@
 .login-input-form {
   width: 350px;
   height: 42px;
-  padding: 20px;
+  padding: 15px;
   border: 2px solid #000;
   border-radius: 50px;
   background-color: #e5e5e5;
@@ -88,27 +109,55 @@
 
 .login__form button,
 .login__form.login__signup-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 350px;
   height: 42px;
+  margin: 0;
   border: 2px solid #000;
   border-radius: 599px;
   background-color: #fff;
   font-weight: 500;
   outline: none;
-  text-decoration: none;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
 }
 
+/* Gender & DOB */
+.gender-dob {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+
+.gender-container,
+.login-dob-form {
+  height: 40px;
+  padding: 15px;
+  border: 2px solid #000;
+  border-radius: 599px;
+  background-color: #e5e5e5;
+}
+
+.gender-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+/* Hover Effects & Misc */
 .login__form button:hover,
-.login__form label input:hover {
+.login__form label input:hover,
+.login__account-info {
   cursor: pointer;
 }
 
-.login__left-side .developer-of-web {
+.login__form-container .developer-of-web {
   font-size: 0.7rem;
   margin-bottom: 10px;
+}
+
+.login__account-info span {
+  font-weight: 500;
 }
