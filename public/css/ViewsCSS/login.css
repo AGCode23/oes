@@ -1,17 +1,50 @@
 .login__section {
   display: flex;
+}
+
+.login__left-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1.5;
+  height: 100vh;
+}
+
+.login__right-side {
+  flex: 2;
+  background-image: url("/assets/LoginSidePhoto.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login__logo {
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin: 50px 0;
+  gap: 10px;
+}
+
+.login__logo img {
+  width: 80px;
+}
+
+.login__logo p {
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .login__center-div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 450px;
-  padding: 30px 30px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+  width: 100%;
+  margin: 30px;
+}
+
+.login__center-div .login__login-text {
+  font-size: 1.8rem;
 }
 
 .login__error {
@@ -22,24 +55,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
   width: 100%;
+  margin: 20px 0;
   gap: 20px;
 }
 
-.login__form input {
-  width: 100%;
+.login-input-form {
+  width: 350px;
   height: 42px;
-}
-
-.login__form input {
   padding: 20px;
+  border: 2px solid #000;
+  border-radius: 50px;
+  background-color: #e5e5e5;
 }
 
-.login__form button {
-  width: 90px;
+.login__form-account-info {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.login__form-account-info label {
+  display: flex;
+  gap: 2px;
+}
+
+.login__form-account-info a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #000;
+}
+
+.login__form button,
+.login__form.login__signup-button {
+  width: 350px;
   height: 42px;
+  border: 2px solid #000;
   border-radius: 599px;
-  border: none;
+  background-color: #fff;
+  font-weight: 500;
   outline: none;
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.login__form button:hover,
+.login__form label input:hover {
+  cursor: pointer;
+}
+
+.login__left-side .developer-of-web {
+  font-size: 0.7rem;
+  margin-bottom: 10px;
 }
