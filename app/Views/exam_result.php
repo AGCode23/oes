@@ -1,6 +1,6 @@
-<?php include "partials/header.php" ?>
-
-<section class="exam_result__section">
+<?php include "partials/htmlhead.php" ?>
+<div class="exam_result__container">
+    <?php include "partials/sidebar.php" ?>
     <h1>Examination Result</h1>
     <p>School Year</p>
     <label>
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-</section>
+    </main>
+</div>
+</body>
 <script src="/js/exam_result.js"></script>
-
-<?php include "partials/footer.php" ?>

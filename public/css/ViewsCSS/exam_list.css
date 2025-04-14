@@ -1,3 +1,7 @@
+.exam-list__container {
+  display: flex;
+}
+
 #exam-list__exams {
   display: flex;
   gap: 10px;

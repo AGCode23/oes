@@ -1,8 +1,8 @@
-<?php include "partials/header.php" ?>
-
-<section class="exam-list__section">
+<?php include "partials/htmlhead.php" ?>
+<div class="exam-list__container">
+    <?php include "partials/sidebar.php" ?>
     <h1>Examination List</h1>
-    <div id="exam-list__exams">
+    <section id="exam-list__exams">
         <?php if ($data['user_exams']): ?>
             <?php foreach ($data['user_exams'] as $exam): ?>
                 <?php if ($data['user_exam_status'][$exam['id']] == 'pending' || $data['user_exam_status'][$exam['id']] == false): ?>
@@ -23,7 +23,7 @@
         <?php else: ?>
             <p><?= "No exams currently available" ?></p>
         <?php endif ?>
-    </div>
-</section>
-
-<?php include "partials/footer.php" ?>
+    </section>
+    </main>
+</div>
+</body>

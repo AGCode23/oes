@@ -1,4 +1,4 @@
-<?php include "partials/header.php" ?>
+<?php include "partials/sidebar.php" ?>
 
 <section class="exam-create__section">
     <form id="exam-create__exam-form" action="/exam/create" method="post">
@@ -49,5 +49,3 @@
 
 </section>
 <script src="/js/exam_create.js"></script>
-
-<?php include "partials/footer.php" ?>
