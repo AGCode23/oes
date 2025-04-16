@@ -1,8 +1,64 @@
 .exam_result__container {
   display: flex;
+  gap: 50px;
+}
+
+.exam_result__container main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.exam_result__section {
+  margin: 25px 50px;
+  margin-left: 0;
+  flex-grow: 1;
+}
+
+.exam_result__section h1 {
+  margin-bottom: 25px;
+}
+
+.exam_result__filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.exam_result__year-container {
+  display: flex;
+  gap: 10px;
+}
+
+#exam_result__subject-code {
+  width: 200px;
+  height: 35px;
+  padding: 0 10px;
 }
 
 .exam_result__body-container {
   display: flex;
-  gap: 50px;
+  flex-direction: column;
+  border: 1.2px solid #000;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.exam_result__table-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.exam_result__table-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.exam_result__failed {
+  color: red;
+}
+
+.exam_result__passed {
+  color: green;
 }

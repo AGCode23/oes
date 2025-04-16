@@ -6,7 +6,16 @@
   overflow: hidden;
 }
 
-main {
-  margin-top: 60px;
-  padding-top: 20px;
+.bold {
+  font-weight: bold;
+}
+
+.semi-bold {
+  font-weight: 500;
+}
+
+.ellipsis {
+  white-space: nowrap; /* Prevent the text from wrapping */
+  overflow: hidden; /* Hide the overflowing text */
+  text-overflow: ellipsis; /* Add the ellipsis (...) */
 }

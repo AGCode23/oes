@@ -64,42 +64,49 @@ function handleResultPage() {
   }
 
   function updateResults(data) {
-    const titleContainer = document.querySelector(
-      ".exam_result__title-container ul"
-    );
-    const descriptionContainer = document.querySelector(
-      ".exam_result__description-container div"
-    );
-    const subjectCodeContainer = document.querySelector(
-      ".exam_result__subject-code-container div"
-    );
-    const completionDateContainer = document.querySelector(
-      ".exam_result__completion-date-container div"
-    );
-    const percentageContainer = document.querySelector(
-      ".exam_result__percentage-container div"
-    );
-    const remarksContainer = document.querySelector(
-      ".exam_result__remarks-container div"
+    const tableContent = document.getElementById(
+      "exam_result__table-content-container"
     );
 
-    titleContainer.innerHTML = "";
-    descriptionContainer.innerHTML = "";
-    subjectCodeContainer.innerHTML = "";
-    completionDateContainer.innerHTML = "";
-    percentageContainer.innerHTML = "";
-    remarksContainer.innerHTML = "";
+    tableContent.innerHTML = "";
 
-    data.filteredResult.forEach((result) => {
-      titleContainer.innerHTML += `<li>${result.title}</li>`;
-      descriptionContainer.innerHTML += `<p>${result.description}</p>`;
-      subjectCodeContainer.innerHTML += `<p>${result.class_code}</p>`;
-      completionDateContainer.innerHTML += `<p>${
-        result.status === "pending" ? "-" : result.submitted_at
+    data.filteredResult.forEach((result, index) => {
+      let resultDetails = "";
+
+      // Use if-else to handle the conditional logic
+      if (result.status === "pending") {
+        resultDetails =
+          '<p style="width: 150px;">-</p><p style="width: 85px;">-</p><p style="width: 65px;">' +
+          result.status +
+          "</p>";
+      } else {
+        if (result.status === "passed") {
+          resultDetails =
+            '<p style="width: 150px;">' +
+            result.submitted_at +
+            '</p><p class="exam_result__passed" style="width: 85px;">' +
+            result.score +
+            '</p><p class="exam_result__passed" style="width: 65px;">' +
+            result.status +
+            "</p>";
+        } else {
+          resultDetails =
+            '<p style="width: 150px;">' +
+            result.submitted_at +
+            '</p><p class="exam_result__failed" style="width: 85px;">' +
+            result.score +
+            '</p><p class="exam_result__failed" style="width: 65px;">' +
+            result.status +
+            "</p>";
+        }
       }
-      </p>`;
-      percentageContainer.innerHTML += `<p>${result.score}</p>`;
-      remarksContainer.innerHTML += `<p>${result.status}</p>`;
+
+      // Add the content to tableContent
+      tableContent.innerHTML += `<div class="exam_result__table-content">
+    <p style="width: 180px;">${index + 1}. ${result.title}</p>
+    <p style="width: 110px;">${result.class_code}</p>
+    ${resultDetails}
+  </div>`;
     });
   }
 
