@@ -72,12 +72,14 @@ function handleResultPage() {
 
     data.filteredResult.forEach((result, index) => {
       let resultDetails = "";
+      let capitalizedStatus =
+        result.status.charAt(0).toUpperCase() + result.status.slice(1);
 
       // Use if-else to handle the conditional logic
       if (result.status === "pending") {
         resultDetails =
           '<p style="width: 150px;">-</p><p style="width: 85px;">-</p><p style="width: 65px;">' +
-          result.status +
+          capitalizedStatus +
           "</p>";
       } else {
         if (result.status === "passed") {
@@ -87,7 +89,7 @@ function handleResultPage() {
             '</p><p class="exam_result__passed" style="width: 85px;">' +
             result.score +
             '</p><p class="exam_result__passed" style="width: 65px;">' +
-            result.status +
+            capitalizedStatus +
             "</p>";
         } else {
           resultDetails =
@@ -96,7 +98,7 @@ function handleResultPage() {
             '</p><p class="exam_result__failed" style="width: 85px;">' +
             result.score +
             '</p><p class="exam_result__failed" style="width: 65px;">' +
-            result.status +
+            capitalizedStatus +
             "</p>";
         }
       }

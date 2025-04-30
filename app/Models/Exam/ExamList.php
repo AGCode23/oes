@@ -22,11 +22,12 @@ class ExamList extends BaseModel
         $this->getYearLevel($studentId);
         try {
             $stmt = $this->db->prepare(
-                "SELECT e.id, e.title, e.description, e.duration
+                "SELECT e.id, e.title, e.description, c.class_code, e.duration, ea.due_date
                 FROM exams AS e
                 JOIN exam_assignments AS ea ON e.id = ea.exam_id
                 JOIN student_section AS ss ON ea.section_id = ss.section_id
                 JOIN sections AS s ON ss.section_id = s.id
+                JOIN classes AS c ON s.class_id = c.id
                 WHERE ss.student_id = :student_id AND s.year_level = :year_level"
             );
             $stmt->execute([

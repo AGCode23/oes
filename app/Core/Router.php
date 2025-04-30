@@ -79,10 +79,14 @@ class Router
                 break;
 
             case "/exam/list":
-                $student_id = (int)$_SESSION['user_id'];
                 $controller = new ExamListController();
-
-                $controller->showExamListPage($student_id);
+                if (!isset($_SESSION['user_id'])) {
+                    header('Location: /login');
+                    exit;
+                } else {
+                    $student_id = (int)$_SESSION['user_id'];
+                    $controller->showExamListPage($student_id);
+                }
                 break;
 
             case "/exam/take_exam":
@@ -112,7 +116,7 @@ class Router
                     $questionType = $_POST['exam_type'] ?? null;
 
                     $controller->submitAnswers($user_id, $examId, $answers, $questionType);
-                    header("Location: /exam");
+                    header("Location: /exam/list");
                     exit;
                 }
 
@@ -120,15 +124,20 @@ class Router
 
             case "/exam/result":
                 $controller = new ExamResultController();
-                $user_id = $_SESSION['user_id'];
-                $subjectCode = $_GET['subject'] ?? null;
-                $yearLevels = !empty($_GET['years']) ? explode(",", $_GET['years']) : [];
-                if (isset($_GET['subject']) || isset($_GET['years'])) {
-                    $controller->filterResults($user_id, $subjectCode, $yearLevels);
-                } else {
-                    $controller->showResultPage($user_id);
-                }
 
+                if (!isset($_SESSION['user_id'])) {
+                    header('Location: /login');
+                    exit;
+                } else {
+                    $user_id = $_SESSION['user_id'];
+                    $subjectCode = $_GET['subject'] ?? null;
+                    $yearLevels = !empty($_GET['years']) ? explode(",", $_GET['years']) : [];
+                    if (isset($_GET['subject']) || isset($_GET['years'])) {
+                        $controller->filterResults($user_id, $subjectCode, $yearLevels);
+                    } else {
+                        $controller->showResultPage($user_id);
+                    }
+                }
                 break;
 
             case "/logout":
@@ -137,6 +146,17 @@ class Router
                 $controller->logout();
                 break;
 
+            case "/user/first_name":
+
+                $controller = new HomeController();
+                if (!isset($_SESSION['user_id'])) {
+                    header('Location: /login');
+                    exit;
+                } else {
+                    $userId = $_SESSION['user_id'];
+                    $controller->getFirstName($userId);
+                }
+                break;
             default:
                 echo '404';
                 break;

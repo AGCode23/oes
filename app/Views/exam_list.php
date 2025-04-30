@@ -1,28 +1,48 @@
 <?php include "partials/htmlhead.php" ?>
 <div class="exam-list__container">
     <?php include "partials/sidebar.php" ?>
-    <h1>Examination List</h1>
     <section id="exam-list__exams">
-        <?php if ($data['user_exams']): ?>
-            <?php foreach ($data['user_exams'] as $exam): ?>
-                <?php if ($data['user_exam_status'][$exam['id']] == 'pending' || $data['user_exam_status'][$exam['id']] == false): ?>
-                    <div class="exam-list__list">
-                        <h2><?= $exam['title'] ?></h2>
-                        <p><?= $exam['description'] ?></p>
-                        <p><?= $exam['duration'] ?></p>
-                        <?php if ($data['user_exam_status'][$exam['id']]): ?>
-                            <p><?= $data['user_exam_status'][$exam['id']] ?></p>
+        <h1>Examination List</h1>
+        <p class="bold">School Year: Placeholder</p>
+        <div class="exam-list__body-container">
+            <!-- Display all exam here -->
+            <div class="exam-list__table-heading">
+                <p class="semi-bold" style="width: 180px;">Title</p>
+                <p class="semi-bold" style="width: 180px;">Description</p>
+                <p class="semi-bold" style="width: 110px;">Subject Code</p>
+                <p class="semi-bold" style="width: 90px;">Duration</p>
+                <p class="semi-bold" style="width: 135px;">Due Date</p>
+                <p class="semi-bold" style="width: 75px;">Status</p>
+                <div style="width: 65px;"></div>
+            </div>
+
+            <div class="exam-list__table-content-container">
+                <?php if ($data['user_exams']): ?>
+                    <?php foreach ($data['user_exams'] as $exam): ?>
+                        <?php if ($data['status'][$exam['id']] == 'pending' || $data['status'][$exam['id']] == false): ?>
+                            <div class="exam-list__table-content">
+                                <p style="width: 180px;"><?= $exam['title'] ?></p>
+                                <p style="width: 180px;"><?= $exam['description'] ?></p>
+                                <p style="width: 110px;"><?= $exam['class_code'] ?></p>
+                                <p style="width: 90px;"><?= $exam['duration'] ?> minutes</p>
+                                <p style="width: 135px;"><?= date('m-d-y h:iA', strtotime($exam['due_date'])) ?></p>
+                                <?php if ($data['status'][$exam['id']]): ?>
+                                    <p style="width: 75px;"><?= ucfirst($data['status'][$exam['id']]) ?></p>
+                                <?php else: ?>
+                                    <p style="width: 75px;">Not Taken</p>
+                                <?php endif ?>
+                                <form method="get" action="/exam/take_exam">
+                                    <button class="exam-list__submit-button" type="submit" name="exam_id" value="<?= htmlspecialchars($exam['id']) ?>">Take</button>
+                                </form>
+                            </div>
                         <?php endif ?>
-                        <form method="get" action="/exam/take_exam">
-                            <button type="submit" name="exam_id" value="<?= htmlspecialchars($exam['id']) ?>">Get Exam</button>
-                        </form>
-                    </div>
+                    <?php endforeach;
+                    unset($exam) ?>
+                <?php else: ?>
+                    <p><?= "No exams currently available" ?></p>
                 <?php endif ?>
-            <?php endforeach;
-            unset($exam) ?>
-        <?php else: ?>
-            <p><?= "No exams currently available" ?></p>
-        <?php endif ?>
+            </div>
+        </div>
     </section>
     </main>
 </div>

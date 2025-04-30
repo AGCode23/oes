@@ -1,18 +1,61 @@
 .exam-list__container {
   display: flex;
+  gap: 50px;
+}
+
+.exam-list__container main {
+  display: flex;
+  flex-grow: 1;
 }
 
 #exam-list__exams {
-  display: flex;
-  gap: 10px;
+  margin: 25px 50px;
+  margin-left: 0;
+  flex-grow: 1;
 }
 
-.exam-list__list {
+#exam-list__exams > p {
+  margin-bottom: 10px;
+}
+
+#exam-list__exams h1 {
+  margin-bottom: 25px;
+}
+
+.exam-list__body-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  border: 1.2px solid #000;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.exam-list__table-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.exam-list__table-content {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 200px;
-  height: 200px;
-  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.75);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.exam-list__table-content:first-child {
+  margin: 0;
+}
+
+.exam-list__submit-button {
+  width: 65px;
+  border: none;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #e5e5e5;
+}
+
+.exam-list__submit-button:hover {
+  cursor: pointer;
+  background-color: #bbbbbb;
 }

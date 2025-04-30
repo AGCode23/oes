@@ -21,8 +21,9 @@ class ExamListController extends BaseController
         $data['user_exams'] = $exams;
         foreach ($data['user_exams'] as $exam) {
             $currentStatus = $this->userModel->getStatus($studentId, $exam['id']);
-            $data['user_exam_status'][$exam['id']] = $currentStatus;
+            $data['status'][$exam['id']] = $currentStatus;
         }
+
         $this->view('exam_list', $data);
     }
 }

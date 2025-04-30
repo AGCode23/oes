@@ -44,11 +44,11 @@
                         <?php if ($result['status'] == 'pending'): ?>
                             <p style="width: 150px;">-</p>
                             <p style="width: 85px;">-</p>
-                            <p style="width: 65px;"><?= $result['status'] ?></p>
+                            <p style="width: 65px;"><?= ucfirst($result['status']) ?></p>
                         <?php else: ?>
                             <p style="width: 150px;"><?= $result['submitted_at'] ?></p>
-                            <?= $result['status'] == 'passed' ? '<p class="exam_result__passed" style="width: 85px;">' . $result['score'] . '</p><p class="exam_result__passed" style="width: 65px;">' . $result['status'] . '</p>'
-                                : '<p class="exam_result__failed" style="width: 85px;">' . $result['score'] . '</p><p class="exam_result__failed" style="width: 65px;">' . $result['status'] . '</p>' ?>
+                            <?= $result['status'] == 'passed' ? '<p class="exam_result__passed" style="width: 85px;">' . $result['score'] . '</p><p class="exam_result__passed" style="width: 65px;">' . ucfirst($result['status']) . '</p>'
+                                : '<p class="exam_result__failed" style="width: 85px;">' . $result['score'] . '</p><p class="exam_result__failed" style="width: 65px;">' . ucfirst($result['status']) . '</p>' ?>
                         <?php endif ?>
                     </div>
                 <?php endforeach ?>
