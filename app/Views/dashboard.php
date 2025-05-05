@@ -1,5 +1,4 @@
-<?php include "partials/htmlhead.php";
-date_default_timezone_set('Asia/Manila'); ?>
+<?php include "partials/htmlhead.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="dashboard__container">
     <?php include "partials/sidebar.php" ?>
@@ -14,20 +13,18 @@ date_default_timezone_set('Asia/Manila'); ?>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, vero adipisci! Ea voluptates vitae sunt non, quaerat facilis suscipit incidunt?</p>
             </div>
             <div class="dashboard__pie-chart">
-                <canvas id="examResultsChart"></canvas>
+                <p>Loading...</p>
             </div>
         </div>
         <div class=" dashboard__sub-container-2">
             <h1>Pending Exam</h1>
             <div class="dashboard__table-heading">
-                <p class="semi-bold">Title</p>
-                <p class="semi-bold">Desciption</p>
-                <p class="semi-bold">Due Date</p>
+                <p class="semi-bold" style="width: 270px;">Title</p>
+                <p class="semi-bold" style="width: 400px;">Description</p>
+                <p class="semi-bold" style="width: 200px;">Due Date</p>
             </div>
             <div class="dashboard__table-content">
-                <p>Title</p>
-                <p>Desciption</p>
-                <p>Due Date</p>
+                <p>Loading...</p>
             </div>
         </div>
     </section>

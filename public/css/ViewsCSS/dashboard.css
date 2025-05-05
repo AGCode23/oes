@@ -57,7 +57,12 @@
 }
 
 .dashboard__table-heading,
-.dashboard__table-content {
+.dashboard__table-content,
+.dashboard__table-content-data {
   display: flex;
-  gap: 250px;
+}
+
+.dashboard__table-content {
+  flex-direction: column;
+  gap: 0;
 }

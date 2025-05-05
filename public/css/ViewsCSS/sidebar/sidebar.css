@@ -69,7 +69,8 @@ a {
   width: 100%;
 }
 
-.header__nav-links:hover {
+.header__nav-links:hover,
+.header__nav-sublink:hover {
   background-color: #999999;
 }
 
@@ -103,7 +104,6 @@ a {
 .header__nav-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .header__exam-group {
@@ -113,6 +113,7 @@ a {
   align-items: center;
   align-self: flex-end;
   width: 50%;
+  margin-top: -20px;
 }
 
 .header__submenu {
@@ -127,4 +128,12 @@ a {
   display: flex;
   flex-direction: column;
   max-height: 500px;
+}
+
+.header__support {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }

@@ -146,7 +146,7 @@ class Router
                 $controller->logout();
                 break;
 
-            case "/user/first_name":
+            case "/user/dashboard_data":
 
                 $controller = new HomeController();
                 if (!isset($_SESSION['user_id'])) {
@@ -154,7 +154,7 @@ class Router
                     exit;
                 } else {
                     $userId = $_SESSION['user_id'];
-                    $controller->getFirstName($userId);
+                    $controller->getDashboardData($userId);
                 }
                 break;
             default:

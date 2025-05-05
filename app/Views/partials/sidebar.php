@@ -34,18 +34,19 @@
                                 Exam
                             </button>
                         </div>
-                        <div class="header__exam-group">
-                            <div id="header__exam-submenu" class="header__submenu">
-                                <a href="/exam/list" class="header__nav-sublink">List</a>
-                                <a href="/exam/result" class="header__nav-sublink">Result</a>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="header__exam-group">
+                    <div id="header__exam-submenu" class="header__submenu">
+                        <a href="/exam/list" class="header__nav-sublink">List</a>
+                        <a href="/exam/result" class="header__nav-sublink">Result</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class=" header__support">
+        <a class="semi-bold" href="/logout">Logout</a>
         <a href="/support">Help & Support</a>
     </div>
 </nav>

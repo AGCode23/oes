@@ -19,10 +19,16 @@ class HomeController extends BaseController
         $this->view('dashboard');
     }
 
-    public function getFirstName($userId)
+    public function getDashboardData($userId)
     {
         $firstName = $this->userModel->getUserFirstName($userId);
+        $examStatus = $this->userModel->getUserExamStatus($userId);
+        $pendingExams = $this->userModel->getUserPendingExams($userId);
 
-        echo json_encode(['firstName' => $firstName]);
+        echo json_encode([
+            'firstName' => $firstName,
+            'examStatus' => $examStatus,
+            'pendingExams' => $pendingExams
+        ]);
     }
 }
