@@ -6,6 +6,8 @@ The **Online Examination System** is a web-based platform designed for Senior Hi
 
 The project is built using **PHP**, **MySQL**, **HTML**, **CSS**, and **JavaScript**, offering a seamless user experience while ensuring security, scalability, and ease of use.
 
+> **Note:** This project is still ongoing and not yet complete. Some features may be under development or subject to change.
+
 ---
 
 ## Features
