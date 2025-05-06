@@ -1,11 +1,8 @@
-.exam-list__container {
-  display: flex;
-  gap: 50px;
-}
-
 .exam-list__container main {
   display: flex;
   flex-grow: 1;
+  overflow-y: auto;
+  padding-left: 300px;
 }
 
 #exam-list__exams {

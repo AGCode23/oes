@@ -4,16 +4,20 @@ a {
 }
 
 .header__nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 250px;
-  height: 100vh;
   padding: 20px 0;
   background: #c1c1c1;
-  overflow: hidden;
   flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .header__upper {
@@ -77,9 +81,8 @@ a {
 .header__nav-sublink {
   padding: 10px;
   padding-left: 20px;
-  padding-right: 150px;
+  padding-right: 60px;
   border-radius: 10px 0 0 10px;
-  overflow-x: hidden;
 }
 
 .header__nav-links.active,

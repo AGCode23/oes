@@ -1,11 +1,8 @@
-.dashboard__container {
-  display: flex;
-  gap: 50px;
-}
-
 .dashboard__container main {
   display: flex;
   flex-grow: 1;
+  overflow-y: auto;
+  padding-left: 300px;
 }
 
 .dashboard__section {

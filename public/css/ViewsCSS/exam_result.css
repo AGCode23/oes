@@ -1,11 +1,8 @@
-.exam_result__container {
-  display: flex;
-  gap: 50px;
-}
-
 .exam_result__container main {
   display: flex;
   flex-grow: 1;
+  overflow-y: auto;
+  padding-left: 300px;
 }
 
 .exam_result__section {
