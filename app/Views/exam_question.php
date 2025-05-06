@@ -1,4 +1,4 @@
-<?php include "partials/sidebar.php" ?>
+<?php include "partials/htmlhead.php" ?>
 
 <section class="exam-question__section">
     <form action="/exam/submit_answer" method="POST">

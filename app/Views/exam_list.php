@@ -31,9 +31,7 @@
                                 <?php else: ?>
                                     <p style="width: 75px;">Not Taken</p>
                                 <?php endif ?>
-                                <form method="get" action="/exam/take_exam">
-                                    <button class="exam-list__submit-button" type="submit" name="exam_id" value="<?= htmlspecialchars($exam['id']) ?>">Take</button>
-                                </form>
+                                <button class="openModalBtn" data-exam-id="<?= htmlspecialchars($exam['id']) ?>" data-exam-duration="<?= htmlspecialchars($exam['duration']) ?>">Take</button>
                             </div>
                         <?php endif ?>
                     <?php endforeach;
@@ -43,7 +41,9 @@
                 <?php endif ?>
             </div>
         </div>
+        <?php include "partials/modal.php" ?>
     </section>
     </main>
 </div>
+<script src="/js/exam_list.js"></script>
 </body>

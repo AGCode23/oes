@@ -44,7 +44,7 @@
   margin: 0;
 }
 
-.exam-list__submit-button {
+.openModalBtn {
   width: 65px;
   border: none;
   padding: 5px;
@@ -52,7 +52,7 @@
   background-color: #e5e5e5;
 }
 
-.exam-list__submit-button:hover {
+.openModalBtn:hover {
   cursor: pointer;
   background-color: #bbbbbb;
 }
