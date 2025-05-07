@@ -46,13 +46,15 @@ class UserController extends BaseController
         exit;
     }
 
-    public function register($name, $email, $password, $confirmPassword)
+    public function register($name, $email, $gender, $dob, $password, $confirmPassword)
     {
         $validateEmail = new Helper();
 
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-        if (empty($name) || empty($email) || empty($password) || empty($confirmPassword)) {
+        if (empty($name) || empty($email) || empty($gender) || empty($dob) || empty($password) || empty($confirmPassword)) {
+            if (!empty($email)) $_SESSION['user_email_register'] = $email;
+            if (!empty($name)) $_SESSION['user_name_register'] = $name;
             return $this->setSessionError('All fields must be filled up!', '/register');
         }
 
@@ -61,11 +63,13 @@ class UserController extends BaseController
         }
 
         if ($password !== $confirmPassword) {
+            if (!empty($email)) $_SESSION['user_email_register'] = $email;
+            if (!empty($name)) $_SESSION['user_name_register'] = $name;
             return $this->setSessionError("Password doesn't match!", '/register');
         }
 
         try {
-            $user = $this->userModel->setUser($name, $email, $password);
+            $user = $this->userModel->setUser($name, $email, $gender, $dob, $password);
         } catch (\Exception $e) {
             error_log("User Error in email: " . $e->getMessage());
             return $this->setSessionError($e->getMessage(), '/register');
@@ -79,7 +83,7 @@ class UserController extends BaseController
 
     public function logout()
     {
-        if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_name']) && isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
             session_unset();
             session_destroy();
 
@@ -97,14 +101,17 @@ class UserController extends BaseController
             unset($_SESSION['user_email']);
         }
 
+        if (isset($_SESSION['user_email_register'])) {
+            $data['user_email_register'] = $_SESSION['user_email_register'];
+            unset($_SESSION['user_email_register']);
+        }
+
+        if (isset($_SESSION['user_name_register'])) {
+            $data['user_name_register'] = $_SESSION['user_name_register'];
+            unset($_SESSION['user_name_register']);
+        }
+
         $this->view("login", $data);
-    }
-
-    public function showRegisterPage()
-    {
-        $data = $this->getSessionErrors();
-
-        $this->view("register", $data);
     }
 
     // HELPER METHODS
@@ -121,6 +128,7 @@ class UserController extends BaseController
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_role'] = $user['role'];
 
         unset($_SESSION['user_error']);
         unset($_SESSION['user_email']);

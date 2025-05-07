@@ -11,7 +11,7 @@ class User extends BaseModel
     public function getUserByEmail($email)
     {
         try {
-            $stmt = $this->db->prepare("SELECT id, email, name, pwd FROM users WHERE email = ?");
+            $stmt = $this->db->prepare("SELECT id, email, name, pwd, role FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -22,7 +22,7 @@ class User extends BaseModel
         }
     }
 
-    public function setUser($name, $email, $pwd)
+    public function setUser($name, $email, $gender, $dob, $pwd)
     {
 
         try {
@@ -37,11 +37,11 @@ class User extends BaseModel
 
             $hashedPassword = password_hash($pwd, PASSWORD_BCRYPT);
 
-            $stmt = $this->db->prepare("INSERT INTO users (name, email, pwd) VALUES (?, ?, ?)");
-            $stmt->execute([$name, $email, $hashedPassword]);
+            $stmt = $this->db->prepare("INSERT INTO users (name, email, gender, dob, pwd) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $gender, $dob, $hashedPassword]);
 
             $userId = $this->db->lastInsertId();
-            $stmt = $this->db->prepare("SELECT id, name, email FROM users WHERE id = ?");
+            $stmt = $this->db->prepare("SELECT id, name, email, role FROM users WHERE id = ?");
             $stmt->execute([$userId]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 

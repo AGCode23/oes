@@ -53,13 +53,13 @@
                         <p class="login__error"><?= $data["user_error"] ?></p>
                     <?php endif ?>
                     <form class="login__form" action="/register" method="POST">
-                        <input class="login-input-form" type="text" name="register-name" placeholder="Fullname">
-                        <input class="login-input-form" type="email" name="register-email" placeholder="Email">
+                        <input class="login-input-form" type="text" name="register-name" placeholder="Fullname" value="<?php echo isset($data['user_name_register']) ? htmlspecialchars($data['user_name_register']) : ''; ?>">
+                        <input class="login-input-form" type="email" name="register-email" placeholder="Email" value="<?php echo isset($data['user_email_register']) ? htmlspecialchars($data['user_email_register']) : ''; ?>">
                         <div class="gender-dob">
                             <div class="gender-container">
-                                <input class="login-gender-form" type="radio" name="register-gender" value="Male">
+                                <input class="login-gender-form" type="radio" name="register-gender" value="male">
                                 <label>Male</label>
-                                <input class="login-gender-form" type="radio" name="register-gender" value="Female">
+                                <input class="login-gender-form" type="radio" name="register-gender" value="female">
                                 <label>Female</label>
                             </div>
                             <div class="dob-container">

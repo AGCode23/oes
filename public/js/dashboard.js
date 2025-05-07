@@ -15,12 +15,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const pendingExams = data.pendingExams;
 
     updateGreeting(greetingsElement, greeting, firstName);
-    renderExamResultsChart(
-      dashboardPieChart,
-      passedPercentage,
-      failedPercentage
-    );
-    renderPendingExams(pendingExamContainer, pendingExams);
+    if (!passedPercentage && !failedPercentage) {
+      dashboardPieChart.innerHTML = "<p>Nothing to show.</p>";
+    } else {
+      renderExamResultsChart(
+        dashboardPieChart,
+        passedPercentage,
+        failedPercentage
+      );
+    }
+
+    if (isEmpty(pendingExams)) {
+      pendingExamContainer.innerHTML = "<p>No pending exams.</p>";
+    } else {
+      renderPendingExams(pendingExamContainer, pendingExams);
+    }
   } catch (error) {
     console.error("Error loading dashboard:", error);
   }
@@ -148,3 +157,7 @@ function formatDateTo12Hour(inputDateTime, timezoneOffsetHours = 0) {
 
   return `${month}-${day}-${year} ${hour}:${minute} ${ampm}`;
 }
+
+// Helper function
+
+const isEmpty = (arr) => arr.length === 0;

@@ -43,11 +43,19 @@ class Router
                 $controller = new UserController();
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $registerName = $_POST['register-name'] ?? '';
+                    $registerEmail = $_POST['register-email'] ?? '';
+                    $registerGender = $_POST['register-gender'] ?? '';
+                    $registerDob = $_POST['register-dob'] ?? '';
+                    $registerPwd = $_POST['register-password'] ?? '';
+                    $registerConfirmPwd = $_POST['register-confirm-password'] ?? '';
                     $controller->register(
-                        $_POST['register-name'],
-                        $_POST['register-email'],
-                        $_POST['register-password'],
-                        $_POST['register-confirm-password']
+                        $registerName,
+                        $registerEmail,
+                        $registerGender,
+                        $registerDob,
+                        $registerPwd,
+                        $registerConfirmPwd
                     );
                 } else {
                     if (isset($_SESSION['user_id'])) header('Location: /');
@@ -74,7 +82,11 @@ class Router
                     $postData = json_decode(file_get_contents('php://input'), true);
                     $controller->submitExam($postData);
                 } else {
-                    $controller->showExamCreatePage();
+                    if ($_SESSION['user_role'] !== 'student') {
+                        $controller->showExamCreatePage();
+                    } else {
+                        echo 'You do not have permission to visit this page!';
+                    }
                 }
                 break;
 
@@ -147,7 +159,6 @@ class Router
                 break;
 
             case "/user/dashboard_data":
-
                 $controller = new HomeController();
                 if (!isset($_SESSION['user_id'])) {
                     header('Location: /login');
@@ -157,6 +168,7 @@ class Router
                     $controller->getDashboardData($userId);
                 }
                 break;
+
             default:
                 echo '404';
                 break;

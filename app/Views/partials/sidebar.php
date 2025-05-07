@@ -40,6 +40,9 @@
                     <div id="header__exam-submenu" class="header__submenu">
                         <a href="/exam/list" class="header__nav-sublink">List</a>
                         <a href="/exam/result" class="header__nav-sublink">Result</a>
+                        <?php if ($_SESSION['user_role'] !== 'student'): ?>
+                            <a href="/exam/create" class="header__nav-sublink">Create</a>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
